@@ -70,7 +70,7 @@ class Cylinder {
     // x means input[n] -> output[n + x] (0<=x<=25)
     int rotation;
     String elements = "abcdefghijklmnopqrstuvwxyz";
-    int roundSize = elements.length() - 1;
+    int roundSize = elements.length();
 
     List<Character> input = new ArrayList<>();
     List<Character> output = new ArrayList<>();
@@ -92,13 +92,14 @@ class Cylinder {
 
     public Character encryptCharacter(Character c) {
         c = Character.toLowerCase(c);
-        this.rotation = this.calculations / this.rotationRate;
+        Character result = this.output.get((this.input.indexOf(c) + this.rotation) % this.roundSize);
         this.calculations ++;
-        return this.output.get((this.input.indexOf(c) + this.rotation) % this.roundSize);
+        this.rotation = this.calculations / this.rotationRate;
+        return result;
     }
 
     public void printCylinderState() {
-        for (int i = 0; i < this.roundSize; i++) {
+        for (int i = 0; i <= this.roundSize; i++) {
             System.out.println(this.input.get(i) + " -> "
                     + this.output.get((i + this.rotation) % this.roundSize));
         }
